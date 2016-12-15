@@ -34,7 +34,7 @@ Add `require('/PATH_TO/iota-php-client/params.php')` to the top of your PHP proj
 ```cp iota-php-client/dummy-config.php iota-php-client/private-config.php```
 and edit private-config.php with your server address.
 
-* Add iota as an alias of /PATH_TO/iota-php-client/commands/bootstrap
+* Add *iota* as an alias of /PATH_TO/iota-php-client/commands/bootstrap
 
 ```echo "alias iota='/PATH_TO/iota-php-client/commands/bootstrap'" >>  ~/bash_aliases;
 	source ./bash_aliases```
