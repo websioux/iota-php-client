@@ -1,0 +1,45 @@
+iota {commands}
+
+**************************************************
+	GENERAL API
+**************************************************
+
+iota JSON_QUERY
+
+The command line utility can be used for any IRI API command, 
+JSON_QUERY represent the JSON of the input
+
+Examples :
+
+iota {"command":"getNeigors"} -json
+iota {"command":"getNeigors"}
+
+OPTIONAL parameters
+
+ (default) - returns the CURL request and readable output of objects (good to be used on the command line)
+ -json : only returns the json string (good to be used by programs).
+ -ssh : a usefull workaround for nodes that do not have https set up, the distant node must have this library installed. 
+        Then the node is queried via ssh and makes it's final request to IRI server with with http://localhost:7876
+
+**************************************************
+	COMMAND LINE SHORT CUTS
+**************************************************
+
+Below are custom commands that are defined in commands/boostrap
+The options -json and -ssh described above are also available
+
+Example:
+iota getNeighbors -json
+ 
+== NODE OPERATION ==
+
+iota getNodeInfo
+iota getNeighbors
+iota addNeighbors udp://123.1.2.3:14265 udp://987.6.5.4:9999
+iota removeNeighbors udp://123.1.2.3:14265 udp://987.6.5.4:9999
+
+== help ==
+
+nxt help 					: return this help
+
+

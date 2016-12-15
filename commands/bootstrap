@@ -1,0 +1,102 @@
+#!/usr/bin/php
+<?php
+error_reporting(E_ALL ^ E_NOTICE);
+require(dirname(__FILE__).'/../params.php');
+function makeInput($argv){
+	global $oApp, $argv;
+	foreach($argv as $sKV){
+		if(strpos($sKV,'=')) {
+			$aExp = explode('&',$sKV);
+			foreach($aExp as $sArg) {
+				list($sK,$sV)=explode('=',$sArg);
+				$oApp->aInput[$sK]=$sV;
+			}
+		}
+	}
+}
+function display() {
+	global $oApp, $argv;
+	$oApp->bOutputRequest = true;
+	foreach($argv as $sArg) {
+		if($sArg == '-http') // force endpoint node connection with http or https
+			$oApp->api_mode='-http';
+		if($sArg == '-json') {
+			$oApp->sOutputMode='json';
+			$oApp->bOutputRequest = false;
+		}
+	}
+	if($oApp->sOutputMode=='json')
+		die(json_encode($oApp->getResponse()));
+	print_r($oApp->getResponse());
+}
+$oApp = new MyCIota;
+switch($argv[1]){
+	default :
+		makeInput($argv);
+		break;
+	case 'stop':
+		if(!defined('IOTA_SERVER_PATH'))
+			die('Can not stop client if IOTA_SERVER_PATH is not defined');
+		chdir(NXT_SERVER_PATH);
+		$cmd = 'ps ax | grep iri/iri | grep -v grep';
+		$sRes = exec($cmd);
+		if(!empty($sRes))
+			$n = strpos($sRes,' ');
+		if(!empty($n))	
+			$pid = substr($sRes,0,$n);
+		$cmd = "kill $pid";
+		exec($cmd);
+		exit;
+		break;
+	case 'restart':
+		exec(PHP_LIB.'commands/bootstrap stop');
+		exec(PHP_LIB.'commands/bootstrap start');
+		exit;
+		break;
+	case 'getBalance':
+		$aAddr=array();
+		for($i=2;$i<count($argv);$i++){
+			$aAddr[] = $argv[$i];
+		}
+		$oApp->aInput =  array(	'command'=>'getBalance',
+								'addresses'=>$aAddr,
+								'threshold'=> 100
+							);
+		break;
+	case 'getState':
+	case 'getNodeInfo':
+		if(!empty($argv[2]))
+			$oApp->nxt_node = $argv[2];
+		$oApp->aInput =  array(	'command'=>'getNodeInfo'); 
+		break;
+	case 'getTips':
+		$oApp->aInput =  array(	'command'=>'getTips');
+		break;
+	case 'getPeers':
+	case 'getNeighbors':
+		$oApp->aInput =  array(	'command'=>'getNeighbors');
+		break;
+	case 'addNeighbors':
+		$aUris=array();
+		for($i=2;$i<count($argv);$i++){
+			if($argv[$i]!='-json' && $argv[$i]!='-ssh') 
+				$aUris[] = $argv[$i];
+		}
+		$oApp->aInput =  array(	'command'=>'addNeighbors',
+								'uris'=>$aUris);
+		break;
+	case 'removeNeighbors':
+		$aUris=array();
+		for($i=2;$i<count($argv);$i++){
+			if($argv[$i]!='-json' && $argv[$i]!='-ssh') 
+				$aUris[] = $argv[$i];
+		}
+		$oApp->aInput =  array(	'command'=>'removeNeighbors',
+								'uris'=>$aUris);
+		break;
+	case 'help' :
+		echo file_get_contents(__DIR__.'/help.txt');
+		die;
+		break;
+}
+display();
