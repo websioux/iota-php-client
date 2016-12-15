@@ -9,26 +9,30 @@ Linux for the command line utiliy
 
 If you have git installed:
 
-```	mkdir iota-php-client; 
+```	
+mkdir iota-php-client; 
 cd iota-php-client; 
-git clone https://github.com/websioux/iota-php-client.git```
+git clone https://github.com/websioux/iota-php-client.git
+```
 
 else
 
-```unzip iota-php-client-master.zip; 
-mv iota-php-client-master iota-php-client```
+```
+wget https://github.com/websioux/iota-php-client/archive/master.zip;
+unzip iota-php-client-master.zip; 
+mv iota-php-client-master iota-php-client
+```
 
 ## To use with PHP projects
 
-Add
-`require('/PATH_TO/iota-php-client/params.php')`
-to the top of your PHP project
+Add `require('/PATH_TO/iota-php-client/params.php')` to the top of your PHP project
 
 ## SET UP Command Line Utility:
 
 * Create custom config
 
-```cp iota-php-client/dummy-config.php to iota-php-client/private-config.php```
+```cp iota-php-client/dummy-config.php iota-php-client/private-config.php```
+and edit private-config.php with your server address.
 
 * Add iota as an alias of /PATH_TO/iota-php-client/commands/bootstrap
 
