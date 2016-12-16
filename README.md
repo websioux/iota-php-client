@@ -10,10 +10,9 @@ Linux for the command line utiliy
 If you have git installed:
 
 ```	
-mkdir iota-php-client; 
-cd iota-php-client; 
 git clone https://github.com/websioux/iota-php-client.git
 ```
+Il will create the folder iota-php-client
 
 else
 
