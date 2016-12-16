@@ -38,8 +38,8 @@ and edit private-config.php with your server address.
 * Add *iota* as an alias of /PATH_TO/iota-php-client/commands/bootstrap
 
 ```
-echo "alias iota='/PATH_TO/iota-php-client/commands/bootstrap'" >>  ~/.bash_aliases;
-source ~/.bash_aliases
+iota-php-client/commands/add_alias
+
 ```
 
 Type

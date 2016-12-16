@@ -1,0 +1,3 @@
+#!/usr/bin/php
+<?php
+exec("echo \"alias iota='".__DIR__. "/bootstrap'\">> ~/.bash_aliases");
